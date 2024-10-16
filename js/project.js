@@ -1,9 +1,10 @@
-// project.js
-
 export let projects = [];
 
 // Create Project Object
 export function createProject(name) {
+    // Capitalize the first letter of the project name
+    name = name.charAt(0).toUpperCase() + name.slice(1);
+    
     return {
         name: name,
         todos: []

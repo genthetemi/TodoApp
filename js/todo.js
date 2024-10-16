@@ -1,6 +1,7 @@
-// todo.js
-
 export function createTodo(title, description, dueDate, priority) {
+    // Capitalize the first letter of the title
+    title = title.charAt(0).toUpperCase() + title.slice(1);
+    
     return {
         title: title,
         description: description,
