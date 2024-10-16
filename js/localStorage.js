@@ -1,5 +1,3 @@
-// localstorage.js
-
 export function saveToLocalStorage(projects) {
     localStorage.setItem('projects', JSON.stringify(projects));
 }

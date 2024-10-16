@@ -77,7 +77,7 @@ button:hover {
 }
 
 .todo-item {
-    cursor: pointer; /* Changes the cursor to pointer for clickable items */
+    cursor: pointer; 
     padding: 10px;
     border: 1px solid #ccc;
     margin: 5px 0;
@@ -85,23 +85,23 @@ button:hover {
 }
 
 .todo-item:hover {
-    background-color: #f0f0f0; /* Light background on hover */
+    background-color: #f0f0f0; 
 }
 
 .todo-description {
     margin-top: 5px;
-    color: #555; /* Slightly darker color for the description */
+    color: #555; 
 }
 
 .description-label {
     font-weight: bold;
-    margin-top: 10px; /* Space above the label */
+    margin-top: 10px; 
 }
 
 .toggle-description {
-    margin-top: 5px; /* Space above the button */
+    margin-top: 5px; 
     cursor: pointer;
-    background-color: #007bff; /* Bootstrap primary color */
+    background-color: #007bff; 
     color: white;
     border: none;
     padding: 5px 10px;
@@ -110,13 +110,13 @@ button:hover {
 }
 
 .toggle-description:hover {
-    background-color: #0056b3; /* Darker shade on hover */
+    background-color: #0056b3; 
 }
 
 .description-container {
     display: flex;
-    gap: 10px; /* Adds space between the buttons */
-    margin-top: 10px; /* Adds some space between the todo item and the buttons */
+    gap: 10px; 
+    margin-top: 10px; 
 }
 
 .description-container button {
