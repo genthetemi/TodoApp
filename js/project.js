@@ -1,17 +1,22 @@
-export default function Project(name) {
-    let todos = [];
+// project.js
 
-    function addTodo (todo){
-        todos.push(todo);
-    }
+export let projects = [];
 
-    function removeTodo(index) {
-        todos.splice(index, 1);
-    }
+// Create Project Object
+export function createProject(name) {
+    return {
+        name: name,
+        todos: []
+    };
+}
 
-    function getTodos() {
-        return todos;
-    }
+// Add New Project
+export function addProject(name) {
+    const newProject = createProject(name);
+    projects.push(newProject);
+}
 
-    return {name, addTodo, removeTodo, getTodos};
+// Delete Project
+export function deleteProject(index) {
+    projects.splice(index, 1);
 }

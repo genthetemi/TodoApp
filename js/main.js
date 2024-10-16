@@ -1,56 +1,127 @@
-import ToDo from "./todo";
-import Project from "./project";
-import { saveToLocalStorage, loadFromLocalStorage } from './localStorage';
+// main.js
+import { projects, addProject, deleteProject } from './project.js';
+import { createTodo, addTodoToProject, deleteTodoFromProject } from './todo.js';
+import { saveToLocalStorage, loadFromLocalStorage } from './localStorage.js';
 
-let projects = loadFromLocalStorage();
-let currentProject = projects.length > 0 ? projects[0] : Project('Deafult Project'); projects.push(currentProject);
+// Load Projects from Local Storage
+projects.push(...loadFromLocalStorage());
 
-document.getElementById('add-project-btn').addEventListener('click', () => {
-    const projectName = document.getElementById('new-project-name').value;
+// Add New Project
+document.getElementById('addProjectButton').addEventListener('click', addNewProject);
+
+function addNewProject() {
+    const projectNameInput = document.getElementById('projectNameInput');
+    const projectName = projectNameInput.value.trim();
+
     if (projectName) {
-        const newProject = Project(projectName);
-        projects.push(newProject);
+        addProject(projectName);
+        saveToLocalStorage(projects); // Save to local storage
+        projectNameInput.value = ''; // Clear the input
         renderProjects();
-        saveToLocalStorage(projects);
+    } else {
+        alert('Please enter a project name.');
     }
-});
+}
 
-document.getElementById('add-todo-btn').addEventListener('click', () => {
-    const title = document.getElementById('todo-title').value;
-    const description = document.getElementById('todo-desc').value;
-    const dueDate = document.getElementById('todo-due-date').value;
-    const priority = document.getElementById('todo-priority').value;
-
-    if (title && description && dueDate && priority){
-        const todo = ToDo(title, description, dueDate, priority);
-        currentProject.addTodo(todo);
-        renderTodos(currentProject.getTodos());
-        saveToLocalStorage(projects);
-    }
-});
-
+// Render Projects
 function renderProjects() {
-    const projectList = document.getElementById('project-list');
-    projectList.innerHTML = '';
-    projects.foreach((project, index) => {
-        const li = document.createElement('li');
-        li.addEventListener('click', () =>{
-            currentProject = project;
-            renderTodos(currentProject.getTodos());
+    const projectsContainer = document.getElementById('projectsContainer');
+    projectsContainer.innerHTML = ''; // Clear previous projects
+
+    projects.forEach((project, index) => {
+        const projectDiv = document.createElement('div');
+        projectDiv.className = 'project-item';
+        projectDiv.innerHTML = `
+            <strong>${project.name}</strong>
+            <button onclick="selectProject(${index})">Select</button>
+            <button onclick="deleteProject(${index})">Delete</button>
+        `;
+        projectsContainer.appendChild(projectDiv);
+    });
+}
+
+// Select Project
+let currentProjectIndex = null;
+
+window.selectProject = function(index) {
+    currentProjectIndex = index;
+    renderTodos();
+};
+
+// Delete Project
+window.deleteProject = function(index) {
+    deleteProject(index);
+    saveToLocalStorage(projects); // Save to local storage
+    renderProjects();
+    renderTodos();
+};
+
+// Add Todo
+document.getElementById('addTodoButton').addEventListener('click', addNewTodo);
+
+function addNewTodo() {
+    if (currentProjectIndex === null) {
+        alert('Please select a project to add todos.');
+        return;
+    }
+
+    const titleInput = document.getElementById('todoTitleInput');
+    const descriptionInput = document.getElementById('todoDescriptionInput');
+    const dueDateInput = document.getElementById('todoDueDateInput');
+    const priorityInput = document.getElementById('todoPriorityInput');
+    
+    const title = titleInput.value.trim();
+    const description = descriptionInput.value.trim();
+    const dueDate = dueDateInput.value;
+    const priority = priorityInput.value;
+
+    if (title && description && dueDate) {
+        const todo = createTodo(title, description, dueDate, priority);
+        addTodoToProject(projects[currentProjectIndex], todo);
+        saveToLocalStorage(projects); // Save to local storage
+        titleInput.value = '';
+        descriptionInput.value = '';
+        dueDateInput.value = '';
+        renderTodos();
+    } else {
+        alert('Please fill in all fields.');
+    }
+}
+
+// Render Todos
+function renderTodos() {
+    const todosContainer = document.getElementById('todosContainer');
+    todosContainer.innerHTML = '';
+    const project = projects[currentProjectIndex];
+
+    if (project) {
+        project.todos.forEach((todo, todoIndex) => {
+            const todoDiv = document.createElement('div');
+            todoDiv.className = `todo-item priority-${todo.priority.toLowerCase()}`;
+            todoDiv.innerHTML = `
+                <div>
+                    <strong>${todo.title}</strong> - ${todo.dueDate} 
+                    <span class="priority">${todo.priority}</span>
+                    <br>
+                    <small>Project: ${project.name}</small>
+                    <br>
+                    <button onclick="deleteTodo(${todoIndex})">Delete</button>
+                </div>
+            `;
+            todosContainer.appendChild(todoDiv);
         });
-        projectList.appendChild(li);
-    });
+    } else {
+        todosContainer.innerHTML = `<p>Select a project to view its todos.</p>`;
+    }
 }
 
-function renderTodos(todos){
-    const todoList = document.getElementById('todo-list');
-    todoList.innerHTML = '';
-    todos.foreach((todo, index) => {
-        const li = document.createElement('li');
-        li.textContent = '${todo,title} - Due: ${todo.DueDate} - Priority: ${todo.priority}';
-        todoList.appendChild(li);
-    });
+// Delete Todo
+window.deleteTodo = function(todoIndex) {
+    const project = projects[currentProjectIndex];
+    deleteTodoFromProject(project, todoIndex);
+    saveToLocalStorage(projects); // Save to local storage
+    renderTodos();
 }
 
+// Initial Render
 renderProjects();
-renderTodos(currentProject.getTodos());

@@ -1,32 +1,34 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="Width=device-width, initial-scale=1.0">
-        <title>Todo List</title>
-    </head>
-    <body>
-        <div id="app">
-            <h1>Todo List</h1>
-            <div id="project-container">
-                <h2>Projects</h2>
-                <ul id="project-list"></ul>
-                <input type="text" id="new-project-name" placeholder="New Project">
-                <button id="add-project-btn">Add Project</button>
-            </div>
-            <div id="todo-container">
-                <h2>Todos</h2>
-                <ul id="todo-list"></ul>
-                <input type="text" id="todo-title" placeholder="Title">
-                <input type="text" id="todo-desc" placeholder="Description">
-                <input type="date" id="todo-due-date">
-                <input type="text" id="todo-priority" placeholder="Priority">
-                <button id="add-todo-btn">Add Todo</button>
-            </div>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo App</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Todo App</h1>
+        <div class="project-section">
+            <h2>Projects</h2>
+            <input type="text" id="projectNameInput" placeholder="Enter project name" />
+            <button id="addProjectButton">Add Project</button>
+            <div id="projectsContainer"></div>
         </div>
-        <script src="./js/todo.js"></script>
-        <script src="./js/project.js"></script>
-        <script src="./js/localStorage.js"></script>
-        <script src="./js/main.js"></script>
-    </body>
+        <div class="todo-section">
+            <h2>Todos</h2>
+            <input type="text" id="todoTitleInput" placeholder="Todo Title" />
+            <input type="text" id="todoDescriptionInput" placeholder="Todo Description" />
+            <input type="date" id="todoDueDateInput" />
+            <select id="todoPriorityInput">
+                <option value="Low">Low</option>
+                <option value="Medium">Medium</option>
+                <option value="High">High</option>
+            </select>
+            <button id="addTodoButton">Add Todo</button>
+            <div id="todosContainer"></div>
+        </div>
+    </div>
+    <script type="module" src="./js/main.js"></script>
+</body>
 </html>
