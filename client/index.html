@@ -1,0 +1,31 @@
+<!-- client/index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo App</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="app">
+        <h1>Todo App</h1>
+        <input type="text" id="projectNameInput" placeholder="Project Name">
+        <button id="addProjectButton">Add Project</button>
+        <div id="projectsContainer"></div>
+
+        <h2>Todos</h2>
+        <input type="text" id="todoTitleInput" placeholder="Todo Title">
+        <input type="text" id="todoDescriptionInput" placeholder="Todo Description">
+        <input type="date" id="todoDueDateInput">
+        <select id="todoPriorityInput">
+            <option value="High">High</option>
+            <option value="Medium">Medium</option>
+            <option value="Low">Low</option>
+        </select>
+        <button id="addTodoButton">Add Todo</button>
+        <div id="todosContainer"></div>
+    </div>
+    <script src="js/main.js"></script>
+</body>
+</html>
